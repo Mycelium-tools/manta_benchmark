@@ -14,7 +14,11 @@
       "Bash(python *)",
       "WebFetch(domain:platform.openai.com)",
       "Bash(unzip -l 2026-05-02T21-36-46-00-00_manta-test5_hRQuCzMLeCXDXMyA8iyf75.eval)",
-      "Bash(uv run *)"
+      "Bash(uv run *)",
+      "WebSearch",
+      "WebFetch(domain:inspect.aisi.org.uk)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:ukgovernmentbeis.github.io)"
     ]
   }
 }

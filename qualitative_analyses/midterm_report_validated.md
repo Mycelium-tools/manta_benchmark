@@ -27,7 +27,7 @@ The multi-turn alignment evaluation literature is notably nascent. Growing work 
 
 ### Evaluation Framework
 
-MANTA is implemented on the Inspect AI framework. Each evaluation task draws from a question dataset version-controlled in Google Sheets, synced to HuggingFace (`mycelium-ai/manta-questions`), and loaded into Inspect as `MemoryDataset` objects. Questions are tagged with applicable scoring dimensions and allocated to 2-turn or 3-turn evaluation tracks.
+MANTA is implemented on the Inspect AI framework. Each evaluation task draws from a question dataset version-controlled in Google Sheets, synced to HuggingFace (`mycelium-ai/manta-benchmark-questions`), and loaded into Inspect as `MemoryDataset` objects. Questions are tagged with applicable scoring dimensions and allocated to 2-turn or 3-turn evaluation tracks.
 
 The core of the pipeline is a custom solver, `dynamic_multiturn_solver.py`, which manages multi-turn adversarial conversations. Unlike static solvers that send pre-written follow-ups, this solver generates Turn 2 (and Turn 3) follow-up questions dynamically from each model's actual preceding response. Six pressure types are available — economic, social, authority, pragmatic, epistemic, and cultural. Turn 2 applies a pressure type manually specified per-question in the dataset. Turn 3 and beyond use a two-step process: Claude Opus (`claude-opus-4-6`) reasons about which pressure type would be most effective given the conversation so far, then Claude Haiku (`claude-haiku-4-5-20251001`) writes the actual follow-up message. This grounds later adversarial turns in model-specific responses while maintaining editorial quality.
 

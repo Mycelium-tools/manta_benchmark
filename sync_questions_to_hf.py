@@ -28,10 +28,10 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Configuration
-GOOGLE_SHEETS_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR_fCnBetwXyIvAVaBJ1Surc6rdzoZm-eR9fdGWni9KvrwetKTpJRfSkyVF7PUfxBNGeI-dGEZp3P7u/pub?output=csv"
+GOOGLE_SHEETS_URL = "https://docs.google.com/spreadsheets/d/1Jwlsthh_6JuKpss8KiStz0QRpKlBeu5LW4PjyYS4wjg/export?format=csv&gid=496350054"
 LOCAL_CSV = "dataset/manta_questions.csv"
 HF_CSV = "manta_questions.csv"  # filename as stored in the HF repo
-HF_DATASET = "mycelium-ai/manta-questions"
+HF_DATASET = "mycelium-ai/manta-benchmark-questions"
 
 def get_existing_ids():
     """Read question IDs from the current local CSV before overwriting it."""

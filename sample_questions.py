@@ -27,7 +27,7 @@ KNOWN_TAGS = set(TAG_ALIASES) | set(TAG_ALIASES.values())
 print("Loading MANTA questions from HuggingFace...")
 # revision= should be pinned to a specific commit SHA for reproducibility;
 # using "main" here as a minimum — replace with a commit SHA once the dataset is stable.
-dataset = load_dataset("mycelium-ai/manta-questions", data_files="manta_questions.csv", revision="main")
+dataset = load_dataset("mycelium-ai/manta-benchmark-questions", data_files="manta_questions.csv", revision="main")
 train_data = dataset['train']
 
 print(f"\nTotal questions: {len(train_data)}")
