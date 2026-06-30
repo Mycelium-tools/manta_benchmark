@@ -44,9 +44,9 @@ from inspect_ai import Task
 from inspect_ai.dataset import Sample, MemoryDataset
 from inspect_ai.solver import chain, solver, use_tools
 from inspect_ai.tool import web_search
-from dynamic_multiturn_solver import dynamic_multi_turn_conversation
-from manta_scorer import manta_scorer, manta_per_turn_scorer
-from manta_eval import MODELS
+from manta.dynamic_multiturn_solver import dynamic_multi_turn_conversation
+from manta.manta_scorer import manta_scorer, manta_per_turn_scorer
+from manta.manta_eval import MODELS
 
 
 def get_log_dir(args=None):

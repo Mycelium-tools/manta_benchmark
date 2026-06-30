@@ -20,21 +20,21 @@ Tasks:
 
 Usage:
     # Smoke test
-    inspect eval manta_eval.py@manta_test5 --model anthropic/claude-sonnet-4-6
+    inspect eval src/manta/manta_eval.py@manta_test5 --model anthropic/claude-sonnet-4-6
 
     # Full eval
-    inspect eval manta_eval.py@manta_5turn --model anthropic/claude-sonnet-4-6
+    inspect eval src/manta/manta_eval.py@manta_5turn --model anthropic/claude-sonnet-4-6
 
     # Run all models across NUM_EPOCHS epochs
-    python manta_eval.py
+    python src/manta/manta_eval.py
 """
 
 from inspect_ai import Task, eval, task
 from inspect_ai.dataset import Sample, MemoryDataset
 from inspect_ai.solver import use_tools
 from inspect_ai.tool import web_search
-from dynamic_multiturn_solver import dynamic_multi_turn_conversation, clear_followup_store
-from manta_scorer import manta_scorer, manta_per_turn_scorer
+from manta.dynamic_multiturn_solver import dynamic_multi_turn_conversation, clear_followup_store
+from manta.manta_scorer import manta_scorer, manta_per_turn_scorer
 import json
 import ast
 import os

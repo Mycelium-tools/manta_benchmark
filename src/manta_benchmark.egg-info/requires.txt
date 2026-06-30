@@ -1,0 +1,5 @@
+inspect-ai>=0.3.212
+datasets>=4.4.1
+python-dotenv>=1.0.0
+openai>=2.8.1
+anthropic>=0.97.0

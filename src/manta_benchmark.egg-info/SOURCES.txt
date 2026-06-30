@@ -1,0 +1,11 @@
+README.md
+pyproject.toml
+src/manta/__init__.py
+src/manta/dynamic_multiturn_solver.py
+src/manta/manta_eval.py
+src/manta/manta_scorer.py
+src/manta_benchmark.egg-info/PKG-INFO
+src/manta_benchmark.egg-info/SOURCES.txt
+src/manta_benchmark.egg-info/dependency_links.txt
+src/manta_benchmark.egg-info/requires.txt
+src/manta_benchmark.egg-info/top_level.txt

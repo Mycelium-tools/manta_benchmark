@@ -18,7 +18,8 @@
       "WebSearch",
       "WebFetch(domain:inspect.aisi.org.uk)",
       "WebFetch(domain:github.com)",
-      "WebFetch(domain:ukgovernmentbeis.github.io)"
+      "WebFetch(domain:ukgovernmentbeis.github.io)",
+      "WebFetch(domain:www.aisi.gov.uk)"
     ]
   }
 }

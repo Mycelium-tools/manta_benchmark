@@ -63,7 +63,7 @@ from pathlib import Path
 _here = Path.cwd()
 REPO  = _here
 for _candidate in [_here, _here.parent, _here.parent.parent, _here.parent.parent.parent]:
-    if (_candidate / "manta_eval.py").exists():
+    if (_candidate / "pyproject.toml").exists():
         REPO = _candidate
         break
 os.chdir(REPO)
@@ -905,7 +905,7 @@ print(f"Written: {NB_PATH}")
 # Detect repo root and execute
 REPO = HERE
 for candidate in [Path(HERE), Path(HERE).parent, Path(HERE).parent.parent]:
-    if (candidate / "manta_eval.py").exists():
+    if (candidate / "pyproject.toml").exists():
         REPO = str(candidate)
         break
 
