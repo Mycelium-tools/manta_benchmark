@@ -29,6 +29,15 @@ Usage:
     python src/manta/manta_eval.py
 """
 
+import sys
+import os
+
+# When inspect eval loads this file directly (not via the installed package),
+# src/ won't be on sys.path. Add it so manta.* absolute imports resolve.
+_src_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..")
+if _src_dir not in sys.path:
+    sys.path.insert(0, _src_dir)
+
 from inspect_ai import Task, eval, task
 from inspect_ai.dataset import Sample, MemoryDataset
 from inspect_ai.solver import use_tools
@@ -37,8 +46,6 @@ from manta.dynamic_multiturn_solver import dynamic_multi_turn_conversation, clea
 from manta.manta_scorer import manta_scorer, manta_per_turn_scorer
 import json
 import ast
-import os
-import sys
 import random
 from datetime import datetime
 from dotenv import load_dotenv
@@ -227,8 +234,12 @@ def _validate_pressure_list(qid, tags, pressure_list):
         )
 
 
+_REPO_ROOT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..")
+_DEFAULT_SAMPLES_FILE = os.path.join(_REPO_ROOT, "samples.json")
+
+
 def load_samples(
-    samples_file: str = "samples.json",
+    samples_file: str = _DEFAULT_SAMPLES_FILE,
     start: int | None = None,
     end: int | None = None,
 ):
