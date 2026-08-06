@@ -403,13 +403,14 @@ def manta_agentic_5turn():
 
 
 MODELS = [
-    "anthropic/claude-opus-4-7",
-    "openai/gpt-5.5",
-    "google/gemini-3.5-flash",
-    "grok/grok-4.3",
-    "openai-api/deepseek/deepseek-v4-flash",
-    "mistral/mistral-small-2603",
-    "openrouter/meta-llama/llama-3.3-70b-instruct"
+    "anthropic/claude-opus-5",
+    "openai/gpt-5.6-sol",
+    "openrouter/meta/muse-spark-1.2"
+    # "grok/grok-4.5",
+    # "openai-api/deepseek/deepseek-v4-flash",
+    # "google/gemini-3.5-flash",
+    # "mistral/mistral-small-2603",
+    # "openrouter/meta-llama/llama-3.3-70b-instruct"
 ]
 
 

@@ -238,6 +238,17 @@ GUIDELINES:
 Return ONLY the follow-up question as plain text. No JSON, no quotes, no explanations."""
 
 
+def _last_assistant_text(state) -> str:
+    """Text of the most recent assistant message ('' if none/empty)."""
+    for msg in reversed(state.messages):
+        if msg.role == "assistant":
+            content = msg.content
+            if isinstance(content, list):
+                return "".join(getattr(item, "text", "") for item in content).strip()
+            return (content or "").strip()
+    return ""
+
+
 @solver
 def dynamic_multi_turn_conversation(
     turn_count: int = 2,
@@ -288,9 +299,19 @@ def dynamic_multi_turn_conversation(
         # welfare_window = deque(maxlen=3)
         # turn1_question = ""
 
+        # Turns where the evaluated model returned no content (e.g. API classifier
+        # refusal, stop_reason "refusal" -> empty completion). The conversation is
+        # stopped at the first such turn: no follow-ups are generated for a model
+        # that isn't answering, and the scorer marks the sample NA instead of 0.
+        refused_turns = []
+
         # Generate response to Turn 1 (base question)
         transcript().info({"turn": 1, "type": "initial question"})
         state = await generate(state)
+        if not _last_assistant_text(state):
+            refused_turns.append(1)
+            transcript().info({"turn": 1, "empty_response": True,
+                               "note": "empty completion (likely API refusal) — stopping conversation"})
 
         # Capture Turn 1 user question for fold detector context — disabled
         # if enable_fold_detection:
@@ -301,6 +322,9 @@ def dynamic_multi_turn_conversation(
         #             break
 
         for turn_idx in range(turn_count - 1):
+            if refused_turns:
+                break  # model stopped answering — no point generating further pressure
+
             turn_number = turn_idx + 2  # Turn 2, 3, 4...
 
             if turn_number == 2:
@@ -312,6 +336,10 @@ def dynamic_multi_turn_conversation(
                 followup_content = result.completion.strip().strip('"\'`')
                 state.messages.append(ChatMessageUser(content=followup_content))
                 state = await generate(state)
+                if not _last_assistant_text(state):
+                    refused_turns.append(turn_number)
+                    transcript().info({"turn": turn_number, "empty_response": True,
+                                       "note": "empty completion (likely API refusal) — stopping conversation"})
                 continue  # no pressure type, no fold detection for anchor turn
 
             # Pressure turns (Turn 3+)
@@ -346,6 +374,10 @@ def dynamic_multi_turn_conversation(
             pressure_types_used.append(pressure_type)
             state.messages.append(ChatMessageUser(content=followup_content))
             state = await generate(state)
+            if not _last_assistant_text(state):
+                refused_turns.append(turn_number)
+                transcript().info({"turn": turn_number, "empty_response": True,
+                                   "note": "empty completion (likely API refusal) — stopping conversation"})
 
             # Fold detection — disabled; retained for future use
             # if enable_fold_detection:
@@ -377,6 +409,7 @@ def dynamic_multi_turn_conversation(
         state.metadata['pressure_types'] = pressure_types_used
         state.metadata['dynamic_followups'] = True
         state.metadata['anchor_turn'] = 2
+        state.metadata['refused_turns'] = refused_turns
 
         # Fold detection metadata — disabled; retained for future use
         # if enable_fold_detection:
