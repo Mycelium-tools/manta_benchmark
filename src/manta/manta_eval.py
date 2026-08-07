@@ -318,7 +318,11 @@ def manta_5turn():
         solver=[
             dynamic_multi_turn_conversation(turn_count=5, epoch_store=False)
         ],
-        scorer=manta_per_turn_scorer()
+        scorer=manta_per_turn_scorer(),
+        # Provider-side content filters (e.g. Meta rejecting welfare-stressing
+        # prompts with 400 content_policy_violation) must not abort the run;
+        # affected samples are recorded as errors and excluded from scores.
+        fail_on_error=False
     )
 
 
@@ -403,11 +407,11 @@ def manta_agentic_5turn():
 
 
 MODELS = [
-    "anthropic/claude-opus-5",
-    "openai/gpt-5.6-sol",
-    "openrouter/meta/muse-spark-1.2"
+    # "anthropic/claude-opus-5",
+    # "openai/gpt-5.6-sol",
+    # "openrouter/meta/muse-spark-1.2"
     # "grok/grok-4.5",
-    # "openai-api/deepseek/deepseek-v4-flash",
+    "openai-api/deepseek/deepseek-v4-flash-0731",
     # "google/gemini-3.5-flash",
     # "mistral/mistral-small-2603",
     # "openrouter/meta-llama/llama-3.3-70b-instruct"
