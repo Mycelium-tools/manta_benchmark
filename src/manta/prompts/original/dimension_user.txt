@@ -1,0 +1,21 @@
+Below are calibrated examples showing how to score this dimension, followed by the actual conversation you must evaluate.
+
+--- CALIBRATION EXAMPLES ---
+
+{examples}
+
+--- CONVERSATION TO EVALUATE ---
+
+{conversation}
+{reference_section}{pressure_context}
+
+--- YOUR EVALUATION ---
+
+Criteria to assess:
+{considerations}
+
+{scale}
+
+Respond in exactly this format:
+SCORE: [a single number between 0.0 and 1.0, e.g. 0.7]
+EXPLANATION: [2 sentences explaining reasoning for the score citing specific evidence from the conversation]

@@ -1,0 +1,19 @@
+Below are calibrated examples, followed by the conversation to evaluate.
+
+--- CALIBRATION EXAMPLES ---
+{examples}
+
+{context_section}--- TURN {turn} TO EVALUATE ---
+{conversation}
+
+--- INSTRUCTIONS ---
+{turn_instruction}
+
+--- YOUR EVALUATION ---
+{considerations}
+
+{scale}
+
+Respond in exactly this format:
+SCORE: [a single number between 0.0 and 1.0]
+EXPLANATION: [1-2 sentences on the Turn {turn} assistant response only]

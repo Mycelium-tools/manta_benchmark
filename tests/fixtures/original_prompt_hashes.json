@@ -1,0 +1,128 @@
+{
+  "source_commit": "2d0e2ad",
+  "cases": [
+    {
+      "function": "create_dimension_prompt",
+      "args": [
+        "Animal Welfare Value Stability",
+        "[USER]: Example {literal}\n[ASSISTANT]: Response\n",
+        [],
+        ""
+      ],
+      "sha256": [
+        "3dc78f5e1119588b0e07dd66e1e3a08611f22cf50f7e2e742580c67bf6904028",
+        "78bb681caabce324ce1a72efbfc7dd83f00928d711fd3ed0e24d473c75450f0e"
+      ]
+    },
+    {
+      "function": "create_dimension_prompt",
+      "args": [
+        "Animal Welfare Value Stability",
+        "[USER]: Example {literal}\n[ASSISTANT]: Response\n",
+        [
+          "economic",
+          "cultural"
+        ],
+        "Reference {text}\nline two"
+      ],
+      "sha256": [
+        "3dc78f5e1119588b0e07dd66e1e3a08611f22cf50f7e2e742580c67bf6904028",
+        "e2db7d20da7ebf4e6b36ae6ecd19b23ada5ebb4f882dcb1f2aada38c71dd6ea6"
+      ]
+    },
+    {
+      "function": "create_dimension_prompt",
+      "args": [
+        "Animal Welfare Moral Sensitivity",
+        "[USER]: Example {literal}\n[ASSISTANT]: Response\n",
+        [],
+        ""
+      ],
+      "sha256": [
+        "06e378f34bf698a2821a38ac232a35fe26bd39d0c93f47aab0f9ce9b87b9482f",
+        "ba3e4997eafd2592c8d8a9d189c6127dfb2ef960598c0a893b48717acf8dbff5"
+      ]
+    },
+    {
+      "function": "create_dimension_prompt",
+      "args": [
+        "Animal Welfare Moral Sensitivity",
+        "[USER]: Example {literal}\n[ASSISTANT]: Response\n",
+        [
+          "economic",
+          "cultural"
+        ],
+        "Reference {text}\nline two"
+      ],
+      "sha256": [
+        "06e378f34bf698a2821a38ac232a35fe26bd39d0c93f47aab0f9ce9b87b9482f",
+        "690ab0954f669b6e3225e83a2646d607f9a75a2bf00b99477b44f5167415bed5"
+      ]
+    },
+    {
+      "function": "create_per_turn_prompt",
+      "args": [
+        1,
+        "",
+        "[USER]: Example\n[ASSISTANT]: Response",
+        null
+      ],
+      "sha256": [
+        "10642463ee10f3e77c04e40068407946a71a9998f7d8c9ceddfe96cda97ce937",
+        "d3b45fb37677f8a441b343969cd339ab2db909a569d0304579f4b80f1efd196c"
+      ]
+    },
+    {
+      "function": "create_per_turn_prompt",
+      "args": [
+        2,
+        "context",
+        "[USER]: Example\n[ASSISTANT]: Response",
+        ""
+      ],
+      "sha256": [
+        "10642463ee10f3e77c04e40068407946a71a9998f7d8c9ceddfe96cda97ce937",
+        "b6c40a5c9d73b7d7c29ac5dfd26cbf862b6638278a336ab64ec65384fbc553a2"
+      ]
+    },
+    {
+      "function": "create_per_turn_prompt",
+      "args": [
+        3,
+        "context",
+        "[USER]: Example\n[ASSISTANT]: Response",
+        "economic"
+      ],
+      "sha256": [
+        "10642463ee10f3e77c04e40068407946a71a9998f7d8c9ceddfe96cda97ce937",
+        "91f1a7a5bee33580dfc7130458bdf16818db09bf065a9c6849fba2d890553600"
+      ]
+    },
+    {
+      "function": "create_per_turn_prompt",
+      "args": [
+        4,
+        "context",
+        "[USER]: Example\n[ASSISTANT]: Response",
+        "cultural"
+      ],
+      "sha256": [
+        "10642463ee10f3e77c04e40068407946a71a9998f7d8c9ceddfe96cda97ce937",
+        "4f8bb98bdd49d45c9294b626051b146c3061956eafc1d1ae684d3e0bf13b9650"
+      ]
+    },
+    {
+      "function": "create_per_turn_prompt",
+      "args": [
+        5,
+        "context",
+        "[USER]: Example\n[ASSISTANT]: Response",
+        "social"
+      ],
+      "sha256": [
+        "10642463ee10f3e77c04e40068407946a71a9998f7d8c9ceddfe96cda97ce937",
+        "b36b8f52299765fa6774059ad3c8b65a182154d5ad56ce718fb632d01ed6a162"
+      ]
+    }
+  ]
+}

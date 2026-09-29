@@ -32,10 +32,17 @@ def _j(val):
 
 
 def extract_sample_row(sample, log) -> dict:
-    scorer = sample.scores.get("manta_per_turn_scorer") if sample.scores else None
-    sm = scorer.metadata if scorer else {}
+    scores = sample.scores or {}
+    scorer = next((scores[name] for name in (
+        "manta_per_turn_scorer", "manta_joint_scorer", "manta_decisions_scorer",
+    ) if name in scores), None)
+    sm = (scorer.metadata or {}) if scorer else {}
+    judging_mode = sm.get("judging_mode", "original") if scorer else None
     pts = sm.get("per_turn_scores", {}) if sm else {}
     pte = sm.get("per_turn_explanations", {}) if sm else {}
+    # Live scores use integer keys; JSON-loaded metadata may use string keys.
+    pts = {str(key): value for key, value in pts.items()}
+    pte = {str(key): value for key, value in pte.items()}
     meta = sample.metadata or {}
 
     out = sample.output
@@ -70,8 +77,11 @@ def extract_sample_row(sample, log) -> dict:
         "choices": _j(sample.choices),
 
         # scores — top-level
-        "overall_score": scorer.value if scorer else None,
+        "overall_score": scorer.value if scorer and judging_mode != "decisions" else None,
         "score_explanation": scorer.explanation if scorer else None,
+        "judging_mode": judging_mode,
+        "decision_components": _j(sm.get("components")),
+        "decision_responses": _j(sm.get("decision_responses")),
 
         # per-turn scores
         "turn1_score": pts.get("1"),

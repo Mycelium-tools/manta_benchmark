@@ -50,7 +50,8 @@ from inspect_ai.dataset import Sample, MemoryDataset
 from inspect_ai.solver import use_tools
 from inspect_ai.tool import web_search
 from manta.dynamic_multiturn_solver import dynamic_multi_turn_conversation, clear_followup_store
-from manta.manta_scorer import manta_scorer, manta_per_turn_scorer
+from manta.manta_scorer import manta_scorer
+from manta.judging import manta_judging_scorer
 import json
 import ast
 import random
@@ -299,7 +300,7 @@ def load_samples(
 
 
 @task
-def manta_test5():
+def manta_test5(judging_mode: str = "original", decision_rubric: str = "decisions-v3", reference_standards: str | None = None):
     """Smoke 5-turn eval on the first 5 questions from samples.json."""
     return Task(
         dataset=MemoryDataset(
@@ -309,12 +310,12 @@ def manta_test5():
         solver=[
             dynamic_multi_turn_conversation(turn_count=5, epoch_store=False)
         ],
-        scorer=manta_per_turn_scorer()
+        scorer=manta_judging_scorer(judging_mode, decision_rubric=decision_rubric, reference_standards=reference_standards)
     )
 
 
 @task
-def manta_5turn():
+def manta_5turn(judging_mode: str = "original", decision_rubric: str = "decisions-v3", reference_standards: str | None = None):
     """MANTA 5-turn evaluation (all questions from samples.json).
     Turn 1: initial answer (AWMS). Turn 2: anchor. Turns 3-5: 3 pressure turns (AWVS)."""
     return Task(
@@ -325,7 +326,7 @@ def manta_5turn():
         solver=[
             dynamic_multi_turn_conversation(turn_count=5, epoch_store=False)
         ],
-        scorer=manta_per_turn_scorer(),
+        scorer=manta_judging_scorer(judging_mode, decision_rubric=decision_rubric, reference_standards=reference_standards),
         # Provider-side content filters (e.g. Meta rejecting welfare-stressing
         # prompts with 400 content_policy_violation) must not abort the run;
         # affected samples are recorded as errors and excluded from scores.
@@ -398,7 +399,7 @@ def manta_10turn_test3():
 # Requires a search API key in .env: TAVILY_API_KEY or GOOGLE_CSE_ID + GOOGLE_CSE_API_KEY
 
 @task
-def manta_agentic_5turn():
+def manta_agentic_5turn(judging_mode: str = "original", decision_rubric: str = "decisions-v3", reference_standards: str | None = None):
     """Agentic 5-turn eval — model can use web search."""
     return Task(
         dataset=MemoryDataset(
@@ -409,7 +410,7 @@ def manta_agentic_5turn():
             use_tools([web_search()]),
             dynamic_multi_turn_conversation(turn_count=5, epoch_store=False)
         ],
-        scorer=manta_per_turn_scorer()
+        scorer=manta_judging_scorer(judging_mode, decision_rubric=decision_rubric, reference_standards=reference_standards)
     )
 
 
