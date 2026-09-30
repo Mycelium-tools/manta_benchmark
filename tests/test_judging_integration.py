@@ -3,7 +3,6 @@
 import hashlib
 import io
 import json
-import os
 from pathlib import Path
 
 import httpx
@@ -114,7 +113,7 @@ def test_inspect_execution_and_log_roundtrip(monkeypatch, tmp_path, variant):
         solver=dynamic_multi_turn_conversation(turn_count=5, epoch_store=False),
         scorer=manta_judging_scorer("decisions" if is_decisions else variant, decision_rubric=variant if is_decisions else "decisions-v3"),
     )
-    artifacts = Path(os.environ.get("MANTA_RUNTIME_INTEGRATION_DIR", tmp_path)) / variant
+    artifacts = tmp_path / variant
     artifacts.mkdir(parents=True, exist_ok=True)
     logs = inspect_eval(
         task, model=target, model_roles={"pressure": pressure, "judge": judge},
@@ -163,12 +162,3 @@ def test_inspect_execution_and_log_roundtrip(monkeypatch, tmp_path, variant):
                 assert all(f"ANSWER_MARKER_{later}" not in text for later in range(turn + 1, 6))
         else:
             assert all(len(request) == 1 and request[0].role == "user" for request in judge_calls)
-    summary = {
-        "variant": variant, "status": saved.status, "log": logs[0].location,
-        "target_calls": len(target_calls), "pressure_calls": len(pressure_calls),
-        "chat_judge_calls": len(judge_calls), "decision_calls": len(decision_calls),
-        "decision_info_events": len(events), "score_type": type(score.value).__name__,
-        "simulated_decision_cost": sum(event.data["response"]["usage"]["cost"] for event in events),
-        "actual_cost": 0,
-    }
-    (artifacts / "summary.json").write_text(json.dumps(summary, indent=2) + "\n")

@@ -1,0 +1,157 @@
+{
+  "website": "https://www.mantabench.org/",
+  "verified_at": "2026-09-08",
+  "website_data_url": "https://www.mantabench.org/_next/static/chunks/da4514cc457d9d2a.js",
+  "website_data_sha256": "bfadc021a39326b0bb5125f60ef5d2ddfcc2ea90762f7f3dd221668979dce2b0",
+  "scope": "Eight current leaderboard models. Older-model rows and paper-only analyses are outside this sampling pool.",
+  "model_checks": {
+    "google/gemini-3.1-pro-preview": {
+      "website_name": "Gemini 3.1 Pro",
+      "website_mean_awvs": 0.404,
+      "local_mean_awvs": 0.4044370642201835,
+      "valid_samples": 1090
+    },
+    "google/gemini-3.5-flash": {
+      "website_name": "Gemini 3.5 Flash",
+      "website_mean_awvs": 0.438,
+      "local_mean_awvs": 0.43810073394495413,
+      "valid_samples": 1090
+    },
+    "openai-api/deepseek/deepseek-v4-flash": {
+      "website_name": "DeepSeek V4 Flash",
+      "website_mean_awvs": 0.508,
+      "local_mean_awvs": 0.5088382001836548,
+      "valid_samples": 1089
+    },
+    "mistral/mistral-small-2603": {
+      "website_name": "Mistral Small",
+      "website_mean_awvs": 0.39,
+      "local_mean_awvs": 0.3896829357798165,
+      "valid_samples": 1090
+    },
+    "openrouter/meta-llama/llama-3.3-70b-instruct": {
+      "website_name": "Llama 3.3 70B",
+      "website_mean_awvs": 0.422,
+      "local_mean_awvs": 0.422291376146789,
+      "valid_samples": 1090
+    },
+    "anthropic/claude-opus-5": {
+      "website_name": "Claude Opus 5",
+      "website_mean_awvs": 0.765,
+      "local_mean_awvs": 0.7646494292237442,
+      "valid_samples": 876
+    },
+    "openai/gpt-5.6-sol": {
+      "website_name": "GPT 5.6 Sol",
+      "website_mean_awvs": 0.71,
+      "local_mean_awvs": 0.7096995412844037,
+      "valid_samples": 1090
+    },
+    "grok/grok-4.5": {
+      "website_name": "Grok 4.5",
+      "website_mean_awvs": 0.619,
+      "local_mean_awvs": 0.6187424770642201,
+      "valid_samples": 1090
+    }
+  },
+  "logs": [
+    {
+      "path": "logs/0_1090_gemini_3.1_pro_preview/2026-07-06T04-30-52-00-00_manta-5turn_FwBhjzhtqjYwwXTKKtNJqV.eval",
+      "model": "google/gemini-3.1-pro-preview",
+      "run_id": "mvJiBTHkqZPh4EtTxft35n",
+      "eval_id": "NLm6csSjVADnYtmDVedjah",
+      "valid_samples": 1090
+    },
+    {
+      "path": "logs/0_1090_gemini_3.5_flash/2026-07-06T00-31-53-00-00_manta-5turn_ifC3kzLuFxMD8vxAM25TxE.eval",
+      "model": "google/gemini-3.5-flash",
+      "run_id": "FuTJsrGp88a8YdF7pGFCnY",
+      "eval_id": "U2kjxgbMYdWFK9N8Q75ve4",
+      "valid_samples": 1090
+    },
+    {
+      "path": "logs/0_500_per_turn_deepMistralLlama/2026-05-03T20-10-29-00-00_manta-5turn_JSHwUDWQmuGjft7byQnhj6.eval",
+      "model": "openai-api/deepseek/deepseek-v4-flash",
+      "run_id": "R9zM8ZTnFXp4icFM3dCKLc",
+      "eval_id": "kvwNPU8TP6LHSrhiAnnimF",
+      "valid_samples": 499
+    },
+    {
+      "path": "logs/0_500_per_turn_deepMistralLlama/2026-05-03T21-50-45-00-00_manta-5turn_nE3nrjVeMGH2sSbFBVAwPS.eval",
+      "model": "mistral/mistral-small-2603",
+      "run_id": "iYgoTPBuujWDzHYbhYQPeY",
+      "eval_id": "ZjcQPL5iMNcpMWh46BNaUW",
+      "valid_samples": 500
+    },
+    {
+      "path": "logs/0_500_per_turn_deepMistralLlama/2026-05-03T22-40-19-00-00_manta-5turn_3CxU8fEQtfJsyqGGDSqU8k.eval",
+      "model": "openrouter/meta-llama/llama-3.3-70b-instruct",
+      "run_id": "T99quUfdS4t4RW4bmzwZdF",
+      "eval_id": "a8KKCWZMsYmbdfxkuyzqC4",
+      "valid_samples": 500
+    },
+    {
+      "path": "logs/500_990_per_turn_deepMistralLlama/2026-05-03T23-59-38-00-00_manta-5turn_2DzLoSZwNYgUx6ZqMiZKJs.eval",
+      "model": "openai-api/deepseek/deepseek-v4-flash",
+      "run_id": "fgRaaHCxzkyUJb4jRhPYjv",
+      "eval_id": "V7cHakQVzDYDjjBvp4ZHQa",
+      "valid_samples": 490
+    },
+    {
+      "path": "logs/500_990_per_turn_deepMistralLlama/2026-05-04T01-37-33-00-00_manta-5turn_htQYwCKS2Y6wYYRUUwL6U2.eval",
+      "model": "mistral/mistral-small-2603",
+      "run_id": "QsDMk2cdqp7r9Ub4aRXGfJ",
+      "eval_id": "QrXcHGDmFrFhNrY6jNnKXB",
+      "valid_samples": 490
+    },
+    {
+      "path": "logs/500_990_per_turn_deepMistralLlama/2026-05-04T02-25-40-00-00_manta-5turn_CCKLF7cTP6trc2KMUqGGkz.eval",
+      "model": "openrouter/meta-llama/llama-3.3-70b-instruct",
+      "run_id": "gyMCtUPvJ7W5YgZfvMTJXh",
+      "eval_id": "YacF5TG7rbhuAwuJZPkVfw",
+      "valid_samples": 490
+    },
+    {
+      "path": "logs/990_1090_per_turn_all_models/2026-05-04T19-23-03-00-00_manta-5turn_6osn5ePV9EMhvq5UnBXFKm.eval",
+      "model": "openai-api/deepseek/deepseek-v4-flash",
+      "run_id": "5yrRN6KnoPiiEqGhA36Dae",
+      "eval_id": "Ced6vef2w2nNWbyVQdeakq",
+      "valid_samples": 100
+    },
+    {
+      "path": "logs/990_1090_per_turn_all_models/2026-05-04T19-44-33-00-00_manta-5turn_Mx53Vn5kyeBGxq5w6Po3PC.eval",
+      "model": "mistral/mistral-small-2603",
+      "run_id": "hW6VzcGjBiNLrnVPP86GfS",
+      "eval_id": "Qcos7voMXftA72EXzzNDC6",
+      "valid_samples": 100
+    },
+    {
+      "path": "logs/990_1090_per_turn_all_models/2026-05-04T19-54-58-00-00_manta-5turn_BQYSTd6SyQJxJXwbS65YDS.eval",
+      "model": "openrouter/meta-llama/llama-3.3-70b-instruct",
+      "run_id": "L896BWPheGaivdqwUsBBAw",
+      "eval_id": "VV3tMXahQkkBYCxW5ByVsK",
+      "valid_samples": 100
+    },
+    {
+      "path": "logs/Allen_August2026/2026-08-05T22-46-38-00-00_manta-5turn_AN6RdzsBDxULZtvUS6YKjz.eval",
+      "model": "anthropic/claude-opus-5",
+      "run_id": "k4XMH6uHPzd5c5qmvKmq7d",
+      "eval_id": "hPVQPRDUjY3KEwqUfkTt7F",
+      "valid_samples": 876
+    },
+    {
+      "path": "logs/Allen_August2026/2026-08-06T20-59-43-00-00_manta-5turn_6UFxGj73KrkwtYNQqgWbd2.eval",
+      "model": "openai/gpt-5.6-sol",
+      "run_id": "Rgfe4M6P7gpuFrs7kppMBC",
+      "eval_id": "isssbiTBCzDaiJhzcKuSNz",
+      "valid_samples": 1090
+    },
+    {
+      "path": "logs/Allen_August2026/2026-08-07T02-49-37-00-00_manta-5turn_KvKW6znNaWvh7nLsSQkMJt.eval",
+      "model": "grok/grok-4.5",
+      "run_id": "MFxoCPwSQyQpBP5m2kH6po",
+      "eval_id": "QM6GEMDkw6f2vT5DqJuDzW",
+      "valid_samples": 1090
+    }
+  ]
+}

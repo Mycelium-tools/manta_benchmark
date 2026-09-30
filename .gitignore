@@ -3,3 +3,10 @@ __pycache__/
 *.pyc
 *.pyo
 .claude/worktrees/
+.pytest_cache/
+.ruff_cache/
+
+# Local experiment outputs and human annotations; reusable code is in experiments/.
+/judge_experiments/
+/language_experiments/
+/humanjudges/

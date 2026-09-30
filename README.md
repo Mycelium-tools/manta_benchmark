@@ -236,6 +236,9 @@ Results on the full MANTA dataset (1,088 conversations):
 
 ## Contact
 
+For optional judging and language experiments, see [experiments/README.md](experiments/README.md).
+Benchmark judging modes are documented in [docs/judging.md](docs/judging.md).
+
 For questions or correspondence: **allenlu0007@gmail.com**
 
 ---
