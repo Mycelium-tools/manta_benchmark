@@ -34,7 +34,7 @@ def _j(val):
 def extract_sample_row(sample, log) -> dict:
     scores = sample.scores or {}
     scorer = next((scores[name] for name in (
-        "manta_per_turn_scorer", "manta_joint_scorer", "manta_decisions_scorer",
+        "manta_per_turn_scorer", "manta_joint_scorer", "manta_decisions_scorer", "manta_decisions_awvs_scorer",
     ) if name in scores), None)
     sm = (scorer.metadata or {}) if scorer else {}
     judging_mode = sm.get("judging_mode", "original") if scorer else None

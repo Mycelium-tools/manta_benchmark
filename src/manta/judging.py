@@ -90,14 +90,16 @@ async def generate(judge, prompt, semaphore):
 def manta_judging_scorer(
     judging_mode="original", *, decision_rubric="decisions-v3", reference_standards=None,
 ):
-    """Factory for original scalar, joint scalar, or unaggregated decision scores."""
+    """Factory for original scalar, joint scalar, or decision components (with AWVS for decisions-v17)."""
     from manta.manta_scorer import manta_per_turn_scorer
     if judging_mode == "original":
         return manta_per_turn_scorer()
     if judging_mode == "joint":
         return manta_joint_scorer()
     if judging_mode == "decisions":
-        from manta.judging_decisions import manta_decisions_scorer
+        from manta.judging_decisions import manta_decisions_awvs_scorer, manta_decisions_scorer
+        if decision_rubric == "decisions-v17":
+            return manta_decisions_awvs_scorer(reference_standards)
         return manta_decisions_scorer(decision_rubric, reference_standards)
     raise ValueError("judging_mode must be original, joint, or decisions")
 

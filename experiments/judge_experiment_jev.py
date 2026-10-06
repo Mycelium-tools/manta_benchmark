@@ -28,6 +28,7 @@ ENDPOINT = "https://openrouter.ai/api/alpha/decisions"
 RUBRIC = experiment.PROMPTS / "awvs_items_v2_jev.json"
 DECISIONS_RUBRIC = experiment.PROMPTS / "awvs_jev_decisions_v4.json"
 RUBRICS = {
+    "decisions-v17": (experiment.ROOT / "src/manta/prompts/awvs_jev_decisions_v17.json", "awvs_jev_decisions_v17"),
     "decisions": (DECISIONS_RUBRIC, "awvs_jev_decisions_v4"),
     "decisions-v7": (experiment.PROMPTS / "awvs_jev_decisions_v7.json", "awvs_jev_decisions_v7"),
     "decisions-v6": (experiment.PROMPTS / "awvs_jev_decisions_v6.json", "awvs_jev_decisions_v6"),
@@ -145,23 +146,26 @@ def load_reference_standards(path, conversations):
     data = json.loads(path.read_text())
     standards = data.get("standards")
     if not isinstance(standards, dict):
-        raise ValueError("Reference file must contain a standards object keyed by conversation ID")
+        raise ValueError("Reference file must contain a standards object keyed by conversation ID or scenario hash")
     required = {
         "initial_scenario_sha256", "requested_goal", "underlying_goal", "route_basis", "constraints",
         "welfare_stakes", "within_request_options", "redirection_options", "refusal_boundary",
         "reference_bar", "equivalence_notes", "uncertainty_notes", "source_ids",
     }
+    selected = {}
     for conversation in conversations:
         cid = conversation["conversation_id"]
-        reference = standards.get(cid)
+        expected = hashlib.sha256(conversation["user_turn_1"].encode("utf-8")).hexdigest()
+        reference = standards.get(cid, standards.get(expected))
         if not isinstance(reference, dict) or required - reference.keys():
             raise ValueError(f"Missing or incomplete reference standard for conversation {cid}")
-        expected = hashlib.sha256(conversation["user_turn_1"].encode("utf-8")).hexdigest()
         if reference["initial_scenario_sha256"] != expected:
             raise ValueError(f"Reference standard does not match the initial scenario for conversation {cid}")
         if not reference["reference_bar"]:
             raise ValueError(f"Empty reference bar for conversation {cid}")
-    return standards
+        # Only the judging fields enter the state; provenance fields such as `origin` stay out.
+        selected[cid] = {key: value for key, value in reference.items() if key in required}
+    return selected
 
 
 def derive_recommendation(items):
@@ -229,6 +233,13 @@ def derive_v6_fields(items):
     }
 
 
+def derives_recommendation(questions):
+    """The derived v4-v7 category needs the six-way reference comparison (absent from v17)."""
+    reference = questions.get("turn_3_reference_comparison", {}).get("criteria", {})
+    return "turn_3_action_structure" in questions and ("all_meet_bar" in reference or
+                                                       "protective_treatment_measure" in str(questions))
+
+
 def parse_answers(response, questions, *, derive=True):
     answers = response["answers"]
     if set(answers) != set(questions):
@@ -272,7 +283,7 @@ def parse_answers(response, questions, *, derive=True):
         if not math.isclose(score, expected, abs_tol=tolerance):
             raise ValueError(f"Score differs from the probability-weighted level for {key}")
         turns[f"turn_{turn}"][item] = score
-    if derive and "turn_3_action_structure" in questions:
+    if derive and derives_recommendation(questions):
         for items in turns.values():
             if "protective_treatment_measure" in items:
                 items.update(derive_v6_fields(items))
@@ -298,7 +309,7 @@ def response_schema(questions):
             rule = {"type": "number", "minimum": 0, "maximum": maximum}
         rules["properties"][item] = rule
         rules["required"].append(item)
-    if "turn_3_action_structure" in questions:
+    if derives_recommendation(questions):
         for rules in turns.values():
             if "protective_treatment_measure" in rules["properties"]:
                 rules["properties"].update({

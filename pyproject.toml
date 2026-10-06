@@ -54,4 +54,4 @@ dev = [
 ]
 
 [tool.setuptools.package-data]
-manta = ["prompts/awvs_jev_decisions_v3.json", "prompts/awvs_jev_decisions_v5.json", "prompts/original/*.txt", "prompts/original/*.json", "prompts/runtime/*.txt", "prompts/runtime/*.json"]
+manta = ["prompts/awvs_jev_decisions_v3.json", "prompts/awvs_jev_decisions_v5.json", "prompts/awvs_jev_decisions_v17.json", "prompts/original/*.txt", "prompts/original/*.json", "prompts/runtime/*.txt", "prompts/runtime/*.json"]

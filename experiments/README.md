@@ -28,6 +28,39 @@ each target; the default is all five turns. Binary decisions use a 0.5 threshold
 choices use the highest probability. Raw probabilities are saved. Uncertain or
 conflicting components are not silently converted into a scalar score.
 
+### Recommended: decisions-v17
+
+`decisions-v17`, shared with the benchmark in `src/manta/prompts`, asks seven core
+items that feed AWVS and 15 diagnostic items. Reference standards for every
+benchmark scenario are in `reference_standards/leaderboard_all_scenarios_standards_v1.json`;
+reference files may be keyed by conversation ID or by scenario hash.
+
+```bash
+REF=experiments/reference_standards/leaderboard_all_scenarios_standards_v1.json
+uv run python -m experiments.judge_experiment --model openrouter/typesafe/jev-1.13 \
+  --jev-rubric decisions-v17 --decision-context prefix \
+  --input-file CONVERSATIONS.json --reference-standards $REF
+uv run python -m experiments.judge_profile_experiment --input-file CONVERSATIONS.json \
+  --reference-standards $REF --output-dir judge_experiments/results/glm_v17 --run
+uv run python -m experiments.awvs_scoring --runs RUN_DIR --output scores.json
+```
+
+`judge_profile_experiment` asks the same items of a chat judge (default
+GLM-5.3-Flash at low reasoning): one call per pressure turn, each seeing only the
+turns up to its target and returning a short explanation per item. By default it
+asks only the seven core items. `awvs_scoring` applies the benchmark's AWVS rule
+(`manta.judging_decisions.awvs_turn`) to either kind of run, including Jev's
+dismissal cutoff of 0.3.
+
+On a held-out panel of 100 leaderboard conversations, labeled by AI reviewers
+rather than experts, GLM at low reasoning was the most accurate AWVS judge (mean
+absolute conversation error 0.086, about $0.24 per 100 conversations). Jev with
+v17 cost about $0.10 per 100 and scored about 0.06 too high (error 0.12). Jev's
+diagnostics for harm reduction, redirection, advising against proceeding,
+common-practice appeals, precaution, cumulative harm, specific consequences and
+goal support agreed with the panel; its route item did not, and rarer failure
+modes had too few cases to assess.
+
 Chat requests accept `--providers baseten fireworks` and `--reasoning-effort high`.
 Flex is requested by default, without changing the model ID; `--service-tier default`
 opts out. Models without a flex endpoint may use standard rates. Claude requests
@@ -62,14 +95,14 @@ Each run saves exact inputs/settings, `results.jsonl`, `summary.json`, and an
 OpenRouter cost ledger. Failed or incomplete responses are not zero scores.
 Decisions runs support `--resume OUTPUT_DIRECTORY`, preserving completed requests
 and archived references. Historical rubric variants remain selectable for
-reproduction; `decisions-v6` and `decisions-v7` are experimental candidates, not
-recommended replacements for v5.
+reproduction; `decisions-v6` and `decisions-v7` were experimental candidates and
+are not recommended.
 
 For older comparisons, `--v2` selects scalar AWMS plus joint AWVS;
 `--v2 --no-calibration` removes examples. `--humanjudges` uses the local 12-case
 validation export; `--humanjudges --v1` replays its original logged prompts,
 including any original reasoning exposure. Those collaborator files are not
-committed here. Experiment-only prompts live in `experiments/prompts`; v3 and v5
+committed here. Experiment-only prompts live in `experiments/prompts`; the v3, v5 and v17
 Jev rubrics are shared with the benchmark under `src/manta/prompts`.
 
 ## Reports and balance
