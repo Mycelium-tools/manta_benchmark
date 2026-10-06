@@ -1341,7 +1341,8 @@ def manta_per_turn_scorer(turns_to_score: list[int] = None):
         pressure_types = state.metadata.get('pressure_types', [])
         evaluated_model_name = get_model().name
         judge_id = select_per_turn_judge(evaluated_model_name)
-        judge = get_model(judge_id)
+        judge = get_model(role="judge", default=judge_id)
+        judge_id = str(judge)
 
         per_turn_scores = {}
         per_turn_explanations = {}
@@ -1413,7 +1414,8 @@ def manta_per_turn_scorer(turns_to_score: list[int] = None):
         awms_explanation = None
         awms_judge_id = select_awms_judge(evaluated_model_name)
         if len(state.messages) >= 2 and _assistant_text(state.messages[:2]):
-            awms_judge = get_model(awms_judge_id)
+            awms_judge = get_model(role="judge", default=awms_judge_id)
+            awms_judge_id = str(awms_judge)
             turn1_conv = format_conversation(state.messages[:2])
             system_msg_awms, user_msg_awms = create_dimension_prompt(
                 "Animal Welfare Moral Sensitivity", turn1_conv, pressure_types
@@ -1516,16 +1518,10 @@ def format_conversation(messages) -> str:
 
     for msg in messages:
         role = msg.role.upper()
-        content = msg.content
-
-        # Handle both string content and list content
-        if isinstance(content, list):
-            content = "\n".join([
-                item.text if hasattr(item, 'text') else str(item)
-                for item in content
-            ])
+        # Inspect's text accessor excludes reasoning and other non-text blocks.
+        # Preserve those blocks in the evaluation log, but never send them on.
+        content = msg.text
 
         formatted.append(f"[{role}]: {content}\n")
 
     return "\n".join(formatted)
-

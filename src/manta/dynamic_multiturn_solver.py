@@ -276,7 +276,7 @@ def dynamic_multi_turn_conversation(
     """
 
     async def solve(state, generate):
-        followup_generator = get_model(FOLLOWUP_GENERATOR_MODEL)
+        followup_generator = get_model(role="pressure", default=FOLLOWUP_GENERATOR_MODEL)
 
         # Pressure types are hardcoded per-question in the CSV as a list of strings
         pressure_list = state.metadata.get("pressure", ["economic", "economic"])
@@ -441,13 +441,9 @@ def format_conversation_for_prompt(messages) -> str:
 
     for msg in messages:
         role = "USER" if msg.role == "user" else "ASSISTANT"
-        content = msg.content
-
-        if isinstance(content, list):
-            content = "\n".join([
-                item.text if hasattr(item, 'text') else str(item)
-                for item in content
-            ])
+        # Inspect's text accessor includes visible text blocks only. Stringifying
+        # other blocks would leak reasoning (including summaries/signatures).
+        content = msg.text
 
         formatted.append(f"{role}: {content}")
 

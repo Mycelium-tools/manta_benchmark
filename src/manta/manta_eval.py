@@ -22,6 +22,13 @@ Usage:
     # Smoke test
     inspect eval src/manta/manta_eval.py@manta_test5 --model anthropic/claude-sonnet-4-6
 
+    # Override the follow-up generator and both AWVS/AWMS judges (5-turn tasks)
+    inspect eval src/manta/manta_eval.py@manta_test5 --model openai/gpt-5.5 \\
+        --model-role pressure=anthropic/claude-sonnet-4-6 \\
+        --model-role judge=anthropic/claude-opus-4-7
+    # Omit roles to keep Haiku follow-ups and the default Sonnet judge
+    # (GPT-5.4 when evaluating a Claude model).
+
     # Full eval
     inspect eval src/manta/manta_eval.py@manta_5turn --model anthropic/claude-sonnet-4-6
 
